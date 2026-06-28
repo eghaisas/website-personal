@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transit Audio — Eeshan Ghaisas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Anek Latin', system-ui, sans-serif;
+      background: #F0EFE5;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-nav {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 44px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back-link {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+      opacity: 0.4;
+      transition: opacity 0.1s;
+    }
+
+    .back-link:hover { opacity: 1; }
+    .page-label { font-size: 0.82rem; color: #aaa; }
+
+    main {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 36px 44px 0;
+      flex: 1;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 36px;
+    }
+
+    /* ─── Transit block ─────────────────────────────── */
+    .tb {
+      background: #0e0e0e;
+      border-left: 6px solid var(--color);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    @keyframes tb-glow {
+      0%,  100% { box-shadow: 0 0 0 1px var(--color), 0 0 14px color-mix(in srgb, var(--color) 28%, transparent); }
+      50%        { box-shadow: 0 0 0 1px var(--color), 0 0 40px color-mix(in srgb, var(--color) 55%, transparent); }
+    }
+
+    .tb.is-playing { animation: tb-glow 2.4s ease-in-out infinite; }
+
+    .tb-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid #1c1c1c;
+    }
+
+    .tb-bullet {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--color);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tb-city {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #ededed;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tb-sub {
+      font-size: 0.68rem;
+      color: #484848;
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .tb-player {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+    }
+
+    .tb-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--color);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+      transition: filter 0.12s;
+    }
+
+    .tb-btn:hover { filter: brightness(1.2); }
+
+    .tb-track {
+      flex: 1;
+      height: 3px;
+      background: #1c1c1c;
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .tb-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--color);
+      width: 0%;
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
+
+    .tb-time {
+      font-size: 0.68rem;
+      color: #484848;
+      min-width: 32px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 400;
+    }
+
+    .tb-desc {
+      padding: 14px 22px 20px;
+      font-size: 0.8rem;
+      line-height: 1.72;
+      color: #585858;
+      border-top: 1px solid #161616;
+      font-weight: 400;
+    }
+
+    /* ─── Spacer between blocks ──────────────────────── */
+    .tb-spacer {
+      height: 1px;
+      background: #C5C4BA;
+      margin: 28px 0;
+      opacity: 0.4;
+    }
+
+    /* ─── Footer ─────────────────────────────────────── */
+    footer {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 28px 44px 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .footer-name { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.015em; }
+    .footer-email { font-size: 0.82rem; color: #666; }
+
+    @media (max-width: 799px) {
+      .site-nav { padding: 20px 24px 0; }
+      main { padding: 28px 24px 0; }
+      footer { padding: 24px 24px 36px; flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="back-link">← Personal</a>
+    <span class="page-label">Transit Audio</span>
+  </nav>
+
+  <main>
+    <h1>Transit Audio.</h1>
+
+    <!--
+      ═══════════════════════════════════════════════
+      HOW TO ADD A NEW BLOCK:
+      1. Copy one .tb div below
+      2. Set --color to your line's hex
+      3. Change .tb-bullet text (letter, number, kanji…)
+      4. Update .tb-city and .tb-sub
+      5. Update <audio src="…"> to your file
+      6. Update .tb-desc
+      7. Paste a .tb-spacer before it
+      ═══════════════════════════════════════════════
+    -->
+
+    <div class="tb" style="--color: #0039A6">
+      <div class="tb-head">
+        <span class="tb-bullet">A</span>
+        <div>
+          <p class="tb-city">New York City</p>
+          <p class="tb-sub">IND Eighth Ave Line · 2024</p>
+        </div>
+      </div>
+      <div class="tb-player">
+        <button class="tb-btn" aria-label="Play"></button>
+        <div class="tb-track"><div class="tb-fill"></div></div>
+        <span class="tb-time">0:00</span>
+        <audio src="audio/nyc-a-train.mp3" preload="none"></audio>
+      </div>
+      <p class="tb-desc">
+        Your writeup here.
+      </p>
+    </div>
+
+    <div class="tb-spacer"></div>
+
+    <div class="tb" style="--color: #F62E36">
+      <div class="tb-head">
+        <span class="tb-bullet">丸</span>
+        <div>
+          <p class="tb-city">Tokyo</p>
+          <p class="tb-sub">Tokyo Metro Marunouchi Line · 2023</p>
+        </div>
+      </div>
+      <div class="tb-player">
+        <button class="tb-btn" aria-label="Play"></button>
+        <div class="tb-track"><div class="tb-fill"></div></div>
+        <span class="tb-time">0:00</span>
+        <audio src="audio/tokyo-marunouchi.mp3" preload="none"></audio>
+      </div>
+      <p class="tb-desc">
+        Your writeup here.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <span class="footer-name">Eeshan Ghaisas</span>
+    <span class="footer-email">eghaisas [at] umass [dot] edu</span>
+  </footer>
+
+  <script>
+    const PLAY = '<svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 1.5l8 4.5-8 4.5V1.5z" fill="white"/></svg>';
+    const PAUSE = '<svg width="12" height="12" viewBox="0 0 12 12"><rect x="1.5" y="1" width="3.5" height="10" fill="white"/><rect x="7" y="1" width="3.5" height="10" fill="white"/></svg>';
+
+    class TransitPlayer {
+      constructor(el) {
+        this.el    = el;
+        this.audio = el.querySelector('audio');
+        this.btn   = el.querySelector('.tb-btn');
+        this.fill  = el.querySelector('.tb-fill');
+        this.time  = el.querySelector('.tb-time');
+        this.track = el.querySelector('.tb-track');
+        this.on    = false;
+
+        this.btn.innerHTML = PLAY;
+        this.btn.addEventListener('click', () => this.toggle());
+        this.audio.addEventListener('timeupdate', () => this.progress());
+        this.audio.addEventListener('ended', () => this.reset());
+        this.audio.addEventListener('loadedmetadata', () => {
+          this.time.textContent = this.fmt(this.audio.duration);
+        });
+        this.track.addEventListener('click', e => this.seek(e));
+      }
+
+      toggle() {
+        if (this.on) {
+          this.pause();
+        } else {
+          document.querySelectorAll('.tb').forEach(b => b._p?.pause());
+          this.play();
+        }
+      }
+
+      play() {
+        this.audio.play().catch(() => {});
+        this.on = true;
+        this.el.classList.add('is-playing');
+        this.btn.innerHTML = PAUSE;
+      }
+
+      pause() {
+        this.audio.pause();
+        this.on = false;
+        this.el.classList.remove('is-playing');
+        this.btn.innerHTML = PLAY;
+      }
+
+      reset() {
+        this.on = false;
+        this.el.classList.remove('is-playing');
+        this.fill.style.width = '0%';
+        this.time.textContent = '0:00';
+        this.btn.innerHTML = PLAY;
+      }
+
+      progress() {
+        if (!this.audio.duration) return;
+        this.fill.style.width = (this.audio.currentTime / this.audio.duration * 100) + '%';
+        this.time.textContent = this.fmt(this.audio.currentTime);
+      }
+
+      seek(e) {
+        if (!this.audio.duration) return;
+        const r = this.track.getBoundingClientRect();
+        this.audio.currentTime = ((e.clientX - r.left) / r.width) * this.audio.duration;
+      }
+
+      fmt(s) {
+        return `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, '0')}`;
+      }
+    }
+
+    document.querySelectorAll('.tb').forEach(el => { el._p = new TransitPlayer(el); });
+  </script>
+
+</body>
+</html>
