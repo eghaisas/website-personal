@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eeshan Ghaisas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@100..800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Anek Latin', system-ui, sans-serif;
+      background: #F0EFE5;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 52px 44px 0;
+      flex: 1;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 28px;
+    }
+
+    .bio {
+      display: grid;
+      grid-template-columns: 140px 1fr 72px;
+      border: 1px solid #C5C4BA;
+      margin-bottom: 28px;
+    }
+
+    .bio-photo {
+      padding: 14px;
+      border-right: 1px dashed #C5C4BA;
+    }
+
+    .bio-photo img {
+      width: 112px;
+      height: 112px;
+      border-radius: 4px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .bio-text {
+      padding: 14px 20px;
+      border-right: 1px dashed #C5C4BA;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bio-text p {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: #2c2c2c;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      display: block;
+      text-decoration: none;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .card:hover { transform: translateY(-3px); filter: brightness(0.96); }
+
+    .card canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-label {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: rgba(0, 0, 0, 0.48);
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.45);
+      padding: 3px 7px;
+      border-radius: 4px;
+    }
+
+    .card-1 { background: linear-gradient(138deg, #F4AFAF 0%, #D9C860 48%, #A8BE65 100%); }
+    .card-2 { background: #BAB6D8; }
+    .card-3 { background: #AEBE82; }
+
+    footer {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 28px 44px 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .footer-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-email {
+      font-size: 0.82rem;
+      color: #666;
+    }
+
+    /* Tablet */
+    @media (min-width: 800px) and (max-width: 1279px) {
+      main { padding: 44px 36px 0; }
+      footer { padding: 24px 36px 40px; }
+    }
+
+    /* Mobile */
+    @media (max-width: 799px) {
+      main { padding: 32px 24px 0; }
+
+      .bio { grid-template-columns: 1fr; }
+      .bio-photo { border-right: none; border-bottom: 1px dashed #C5C4BA; }
+      .bio-photo img { width: 100%; height: 200px; }
+      .bio-text { border-right: none; }
+      .bio > div:last-child { display: none; }
+
+      .cards { grid-template-columns: 1fr; }
+
+      footer {
+        padding: 20px 24px 36px;
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>Hello!</h1>
+
+    <div class="bio">
+      <div class="bio-photo">
+        <img src="images/bio.jpg" alt="Eeshan Ghaisas">
+      </div>
+      <div class="bio-text">
+        <p>I'm Eeshan, a third year Ph.D. student in the Physics Department at the University of Massachusetts Amherst.</p>
+        <p>Soft matter systems fascinate me — emergent tunable behaviors, universality, and geometric packing are a few fixations. My current work studies compression-driven fluctuations in GUV membranes, under the advisement of Prof. Tony Dinsmore.</p>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="cards">
+      <a href="research.html" class="card card-1">
+        <span class="card-label">Research</span>
+      </a>
+      <a href="personal.html" class="card card-2">
+        <canvas id="d1"></canvas>
+        <span class="card-label">Personal</span>
+      </a>
+      <a href="cv.html" class="card card-3">
+        <canvas id="d2"></canvas>
+        <span class="card-label">CV</span>
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-name">Eeshan Ghaisas</span>
+    <span class="footer-email">eghaisas [at] umass [dot] edu</span>
+  </footer>
+
+  <script>
+  </script>
+
+</body>
+</html>

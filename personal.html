@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal — Eeshan Ghaisas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@100..800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Anek Latin', system-ui, sans-serif; background: #F0EFE5; color: #1a1a1a; min-height: 100vh; display: flex; flex-direction: column; }
+    .site-nav { max-width: 860px; width: 100%; margin: 0 auto; padding: 24px 44px 0; display: flex; justify-content: space-between; align-items: center; }
+    .back-link { font-size: 0.82rem; font-weight: 700; color: #1a1a1a; text-decoration: none; opacity: 0.4; transition: opacity 0.1s; }
+    .back-link:hover { opacity: 1; }
+    .page-label { font-size: 0.82rem; color: #aaa; }
+    main { max-width: 860px; width: 100%; margin: 0 auto; padding: 36px 44px 0; flex: 1; }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.025em; margin-bottom: 28px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .card { aspect-ratio: 1; border-radius: 10px; overflow: hidden; position: relative; display: block; text-decoration: none; transition: transform 0.15s ease, filter 0.15s ease; }
+    .card:hover { transform: translateY(-3px); filter: brightness(0.96); }
+    .card canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .card-label { position: absolute; bottom: 14px; left: 14px; font-size: 0.82rem; font-weight: 700; color: rgba(0,0,0,0.45); z-index: 1; }
+    .card-1 { background: linear-gradient(138deg, #EDD882 0%, #E0B84A 50%, #C89A2A 100%); }
+    .card-2 { background: #A8BCCE; }
+    .card-3 { background: #CFA898; }
+    footer { max-width: 860px; width: 100%; margin: 0 auto; padding: 28px 44px 44px; display: flex; justify-content: space-between; align-items: baseline; }
+    .footer-name { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.015em; }
+    .footer-email { font-size: 0.82rem; color: #666; }
+    @media (max-width: 799px) {
+      .site-nav { padding: 20px 24px 0; }
+      main { padding: 28px 24px 0; }
+      .cards { grid-template-columns: 1fr; }
+      footer { padding: 24px 24px 36px; flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="../index.html" class="back-link">← Home</a>
+    <span class="page-label">Personal</span>
+  </nav>
+  <main>
+    <h1>Personal.</h1>
+    <div class="cards">
+      <a href="crossword.html" class="card card-1">
+        <span class="card-label">Crossword</span>
+      </a>
+      <a href="transit.html" class="card card-2">
+        <canvas id="d1"></canvas>
+        <span class="card-label">listen up!</span>
+      </a>
+      <a href="" class="card card-3">
+        <canvas id="d2"></canvas>
+        <span class="card-label">Letterboxd</span>
+      </a>
+    </div>
+  </main>
+  <footer>
+    <span class="footer-name">Eeshan Ghaisas</span>
+    <span class="footer-email">eghaisas [at] umass [dot] edu</span>
+  </footer>
+  <script>
+    function drawDots(id, seed) {
+      const canvas = document.getElementById(id); if (!canvas) return;
+      const w = canvas.parentElement.offsetWidth, h = canvas.parentElement.offsetHeight;
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'rgba(200, 180, 45, 0.7)';
+      let s = seed >>> 0;
+      const rng = () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967295; };
+      for (let i = 0; i < 75; i++) {
+        const t = i / 74, sig = 1 / (1 + Math.exp(-9 * (t - 0.5)));
+        const x = w * 0.07 + w * 0.86 * t + (rng() - 0.5) * w * 0.18;
+        const y = h * 0.07 + h * 0.86 * sig + (rng() - 0.5) * h * 0.13;
+        ctx.beginPath(); ctx.arc(x, y, 1.5 + rng() * 1.8, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => { drawDots('d1', 12); drawDots('d2', 143); }));
+    window.addEventListener('resize', () => { drawDots('d1', 12); drawDots('d2', 143); });
+  </script>
+</body>
+</html>
