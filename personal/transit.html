@@ -10,9 +10,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Anek Latin', system-ui, sans-serif;
-      background: #F0EFE5;
-      color: #1a1a1a;
+      font-family: 'Helvetica-Neue', system-ui, sans-serif;
+      background: #131213;
+      color: #cfcaca;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -31,7 +31,7 @@
     .back-link {
       font-size: 0.82rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #dbd8d8;
       text-decoration: none;
       opacity: 0.4;
       transition: opacity 0.1s;
@@ -54,10 +54,16 @@
       letter-spacing: -0.025em;
       margin-bottom: 36px;
     }
+    h3 {
+      font-size: clamp(1rem, 1.2vw, 1.5rem);
+      font-weight: 150;
+      letter-spacing: -0.015em;
+      margin-bottom: 36px;
+    }
 
     /* ─── Transit block ─────────────────────────────── */
     .tb {
-      background: #0e0e0e;
+      background: var(--bg, #0e0e0e);
       border-left: 6px solid var(--color);
       border-radius: 3px;
       overflow: hidden;
@@ -81,11 +87,11 @@
     .tb-bullet {
       width: 38px;
       height: 38px;
-      border-radius: 50%;
+      border-radius: var(--radius,50%);
       background: var(--color);
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 800;
+      color: var(--bul-color,#fff);
+      font-size: var(--bul-text-sz,1.2rem);
+      font-weight: var(--bul-text-wt,800);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -95,14 +101,13 @@
     .tb-city {
       font-size: 1rem;
       font-weight: 800;
-      color: #ededed;
+      color: var(--title,#ededed);
       letter-spacing: 0.06em;
-      text-transform: uppercase;
     }
 
     .tb-sub {
       font-size: 0.68rem;
-      color: #484848;
+      color: #a1a0a0;
       margin-top: 4px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -121,6 +126,7 @@
       height: 38px;
       border-radius: 50%;
       background: var(--color);
+      color: var(--bullet-color,#fff);
       border: none;
       cursor: pointer;
       display: flex;
@@ -136,7 +142,7 @@
     .tb-track {
       flex: 1;
       height: 3px;
-      background: #1c1c1c;
+      background: #484848;
       border-radius: 2px;
       cursor: pointer;
       position: relative;
@@ -149,6 +155,7 @@
       width: 0%;
       transition: width 0.1s linear;
       pointer-events: none;
+      transition: width 0.25s linear;
     }
 
     .tb-time {
@@ -164,7 +171,7 @@
       padding: 14px 22px 20px;
       font-size: 0.8rem;
       line-height: 1.72;
-      color: #585858;
+      color: var(--desc,#4b4b4b);
       border-top: 1px solid #161616;
       font-weight: 400;
     }
@@ -172,13 +179,14 @@
     /* ─── Spacer between blocks ──────────────────────── */
     .tb-spacer {
       height: 1px;
-      background: #C5C4BA;
+      background: #c5c4ba6d;
       margin: 28px 0;
       opacity: 0.4;
     }
 
     /* ─── Footer ─────────────────────────────────────── */
     footer {
+      font-family:'Anek Latin', system-ui, sans-serif; ;
       max-width: 860px;
       width: 100%;
       margin: 0 auto;
@@ -201,12 +209,13 @@
 <body>
 
   <nav class="site-nav">
-    <a href="index.html" class="back-link">← Personal</a>
+    <a href="personal.html" class="back-link">← Personal</a>
     <span class="page-label">Transit Audio</span>
   </nav>
 
   <main>
-    <h1>Transit Audio.</h1>
+    <h1>listen up!</h1>
+    <h3>this is a little collection of announcements from subway systems i have been on! i hope you like it.</h3>
 
     <!--
       ═══════════════════════════════════════════════
@@ -220,44 +229,64 @@
       7. Paste a .tb-spacer before it
       ═══════════════════════════════════════════════
     -->
+    <div class="tb" style="--color: #813074; --bg: #141d2a; --title: #dce8ff; --desc: #a4a6a7; --radius: 0%;--bul-color: #d1d1d1;--bul-text-sz: 1.5rem;--bul-text-wt: 450;">
+        <div class="tb-head">
+          <span class="tb-bullet">ನ</span>
+          <div>
+            <p class="tb-city">Bengaluru, KA, India</p>
+            <p class="tb-sub">Purple Line · 2024</p>
+          </div>
+        </div>
+        <div class="tb-player">
+          <button class="tb-btn" aria-label="Play"></button>
+          <div class="tb-track"><div class="tb-fill"></div></div>
+          <span class="tb-time">0:00</span>
+          <audio src="../assets/nammametro_blr.mp3" preload="none"></audio>
+        </div>
+        <p class="tb-desc">
+          Bengaluru always fills me with an intense sense of calm for some reason. I remember spending summers through the construction of the metro, and the end product is quite good. I miss the dosa at CTR, I miss my friends. I do NOT miss the transfer at Majestic.
+        </p>
+      </div>
 
-    <div class="tb" style="--color: #0039A6">
+    <div class="tb-spacer"></div>
+
+    <div class="tb" style="--color:#e28932; --bg: #000000; --title: #ebeced; --desc: #a2a2a2;">
       <div class="tb-head">
-        <span class="tb-bullet">A</span>
+        <span class="tb-bullet">F</span>
         <div>
-          <p class="tb-city">New York City</p>
-          <p class="tb-sub">IND Eighth Ave Line · 2024</p>
+          <p class="tb-city">New York City, NY, USA</p>
+          <p class="tb-sub">6 Avenue Local · 2025</p>
         </div>
       </div>
       <div class="tb-player">
         <button class="tb-btn" aria-label="Play"></button>
         <div class="tb-track"><div class="tb-fill"></div></div>
         <span class="tb-time">0:00</span>
-        <audio src="audio/nyc-a-train.mp3" preload="none"></audio>
+        <audio src="../assets/nyc.mp3" preload="none"></audio>
       </div>
       <p class="tb-desc">
-        Your writeup here.
+        This particular trip was to hang out with a bunch of friends, before one of them left for Switzerland. NYC will have something new for me on each visit, but this trip, and the people I spent it with will always have a special place in my heart.
       </p>
     </div>
 
     <div class="tb-spacer"></div>
 
-    <div class="tb" style="--color: #F62E36">
+    <div class="tb" style="--color: #fbe74d; --bg: #0a0f1a; --title: #dce8ff; --desc: #90a1ba; --radius: 0%;--bul-color: #000;--bul-text-sz: 1.7rem;--bul-text-wt: 4500">
       <div class="tb-head">
-        <span class="tb-bullet">丸</span>
+        <span class="tb-bullet">Y</span>
         <div>
-          <p class="tb-city">Tokyo</p>
-          <p class="tb-sub">Tokyo Metro Marunouchi Line · 2023</p>
+          <p class="tb-city">San Francisco, CA, USA</p>
+          <p class="tb-sub">Antioch to SFO · 2025</p>
         </div>
       </div>
       <div class="tb-player">
         <button class="tb-btn" aria-label="Play"></button>
         <div class="tb-track"><div class="tb-fill"></div></div>
         <span class="tb-time">0:00</span>
-        <audio src="audio/tokyo-marunouchi.mp3" preload="none"></audio>
+        <audio src="../assets/embarcadero.mp3" preload="none"></audio>
       </div>
       <p class="tb-desc">
-        Your writeup here.
+        I insisted that my friend drop me off at Milpitas so that I could take the BART to SFO. It is ridiculuous that I had to travel 3/4th of the way round the Bay, and any self-respecting public transit system would not function like this.
       </p>
     </div>
 
@@ -332,7 +361,9 @@
       seek(e) {
         if (!this.audio.duration) return;
         const r = this.track.getBoundingClientRect();
+        this.fill.style.transition = 'none';
         this.audio.currentTime = ((e.clientX - r.left) / r.width) * this.audio.duration;
+        requestAnimationFrame(() => { this.fill.style.transition = ''; });
       }
 
       fmt(s) {
